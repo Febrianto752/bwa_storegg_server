@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('bwa-storegg-server:server');
 var http = require('http');
-
+const db = require("../db")
 /**
  * Get port from environment and store in Express.
  */
@@ -24,10 +24,17 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+db.on("error", function (err) {
+  console.log("Connection Error : tidak bisa terhubung ke database")
+  console.log(err)
+})
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+db.on("open", function () {
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+})
+
 
 /**
  * Normalize a port into a number, string, or false.
@@ -87,4 +94,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log("Listening on " + bind)
 }
