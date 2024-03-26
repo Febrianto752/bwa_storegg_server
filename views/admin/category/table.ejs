@@ -12,7 +12,10 @@
       <td><%= index + 1 %></td>
       <td><%= categories[index].name %></td>
       <td>
-        <a href="" class="btn btn-warning">
+        <a
+          href="/category/edit/<%= categories[index]._id %>"
+          class="btn btn-warning"
+        >
           <i class="fas fa-pencil-alt"></i>
           Ubah</a
         >
