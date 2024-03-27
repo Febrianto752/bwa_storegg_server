@@ -28,7 +28,7 @@ module.exports = {
       req.flash("alertStatus", "success");
 
       res.redirect("/category");
-    } catch (err) {
+    } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       res.redirect("/category");
