@@ -1,0 +1,49 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama Koin</th>
+      <th>Jumlah Koin</th>
+      <th>Harga Koin</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for( let index = 0; index < nominals.length; index++ ) { %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= nominals[index].coinName %></td>
+      <td><%= nominals[index].coinQuantity %></td>
+      <td>Rp. <%= nominals[index].price %></td>
+      <td>
+        <a
+          href="/nominal/edit/<%= nominals[index]._id %>"
+          class="btn btn-warning"
+        >
+          <i class="fas fa-pencil-alt"></i>
+          Ubah</a
+        >
+        <form
+          action="/nominal/delete/<%= nominals[index]._id %>?_method=DELETE"
+          class="d-inline-block"
+          method="post"
+        >
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash"></i>
+            Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>No.</th>
+      <th>Nama Koin</th>
+      <th>Jumlah Koin</th>
+      <th>Harga Koin</th>
+      <th>Aksi</th>
+    </tr>
+  </tfoot>
+</table>
