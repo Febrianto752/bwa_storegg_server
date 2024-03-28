@@ -30,18 +30,60 @@ module.exports = {
 
       if (req.file) {
         let tmp_path = req.file.path;
+        let originalExt =
+          req.file.originalname.split(".")[
+            req.file.originalname.split(".").length - 1
+          ];
+        let filename = req.file.filename + "." + originalExt;
+        console.log("filename : ");
+        console.log(filename); // entah kenapa namanya menjadi random
+        let target_path = path.resolve(
+          config.rootPath,
+          `public/uploads/${filename}`
+        );
+
+        const src = fs.createReadStream(tmp_path);
+        const dest = fs.createWriteStream(target_path);
+
+        src.pipe(dest);
+
+        src.on("end", async () => {
+          try {
+            const voucher = new Voucher({
+              name,
+              category,
+              nominals,
+              thumbnail: filename,
+            });
+
+            await voucher.save();
+            req.flash("alertMessage", "Berhasil menambah voucher");
+            req.flash("alertStatus", "success");
+
+            res.redirect("/voucher");
+          } catch (error) {
+            req.flash("alertMessage", `${error.message}`);
+            req.flash("alertStatus", "danger");
+            res.redirect("/voucher");
+          }
+        });
+      } else {
+        const voucher = new Voucher({
+          name,
+          category,
+          nominals,
+        });
+
+        await voucher.save();
+        req.flash("alertMessage", "Berhasil menambah voucher");
+        req.flash("alertStatus", "success");
+
+        res.redirect("/voucher");
       }
-      // let category = await Category({ name });
-      await category.save();
-
-      req.flash("alertMessage", "Berhasil menambah kategori");
-      req.flash("alertStatus", "success");
-
-      res.redirect("/category");
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
-      res.redirect("/category");
+      res.redirect("/voucher");
     }
   },
 };
