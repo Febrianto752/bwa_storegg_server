@@ -1,0 +1,81 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama Game</th>
+      <th>Kategori</th>
+      <th>Nominals</th>
+      <th>Status</th>
+      <th>Gambar</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for( let index = 0; index < vouchers.length; index++ ) { %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= vouchers[index].name %></td>
+      <td><%= vouchers[index].category?.name ?? "" %></td>
+      <td>
+        <img
+          width="60"
+          height="60"
+          src="/uploads/<%= vouchers[index].thumbnail %>"
+          alt=""
+        />
+      </td>
+      <td>
+        <% vouchers[index].nominals.forEach(nominal => { %>
+        <span class="badge badge-warning">
+          <%= nominal.coinName %> <%= nominal.coinQuantity %>
+        </span>
+        <% }) %>
+      </td>
+      <td>
+        <% if (vouchers[index].status === 'Y') { %>
+        <span class="badge badge-success"> Aktif </span>
+        <% }else{ %>
+        <span class="badge badge-success"> Tidak Aktif </span>
+        <% } %>
+      </td>
+      <td>
+        <form action="" style="display: inline-block">
+          <button class="btn btn-primary btn-sm">
+            <i class="fas fa-folder"></i>
+            <% if (vouchers[index].status === 'Y') { %> Matikan <% }else{ %>
+            Hidupkan <% } %>
+          </button>
+        </form>
+        <a
+          href="/voucher/edit/<%= vouchers[index]._id %>"
+          class="btn btn-warning btn-sm"
+        >
+          <i class="fas fa-pencil-alt"></i>
+          Ubah</a
+        >
+        <form
+          action="/voucher/delete/<%= vouchers[index]._id %>?_method=DELETE"
+          class="d-inline-block"
+          method="post"
+        >
+          <button type="submit" class="btn btn-danger btn-sm">
+            <i class="fas fa-trash"></i>
+            Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>No.</th>
+      <th>Nama Game</th>
+      <th>Kategori</th>
+      <th>Nominals</th>
+      <th>Status</th>
+      <th>Gambar</th>
+      <th>Aksi</th>
+    </tr>
+  </tfoot>
+</table>

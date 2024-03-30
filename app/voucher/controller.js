@@ -8,7 +8,11 @@ const config = require("../../config");
 module.exports = {
   index: async (req, res) => {
     try {
-      const vouchers = await Voucher.find();
+      const vouchers = await Voucher.find()
+        .populate("category")
+        .populate("nominals");
+
+      console.log(vouchers);
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };

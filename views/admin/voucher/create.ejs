@@ -109,7 +109,7 @@
                             src="/images/no_image.jpg"
                             alt="preview"
                             id="preview"
-                            style="width: 30%; height: 50%"
+                            style="width: 200px; height: 220px"
                           />
                         </div>
                       </div>
@@ -149,8 +149,8 @@
 
     reader.onload = function (e) {
       $("#preview").attr("src", e.target.result);
-      $("#preview").attr("width", "30%");
-      $("#preview").attr("height", "50%");
+      // $("#preview").attr("width", "30%");
+      // $("#preview").attr("height", "50%");
     };
 
     reader.readAsDataURL(input.files[0]);
