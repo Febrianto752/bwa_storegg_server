@@ -90,4 +90,34 @@ module.exports = {
       res.redirect("/voucher");
     }
   },
+  viewEdit: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const voucher = await Voucher.findOne({ _id: id });
+      const categories = await Category.find();
+      const nominals = await Nominal.find();
+
+      res.render("admin/voucher/edit", { voucher, categories, nominals });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/voucher");
+    }
+  },
+  actionEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { name } = req.body;
+
+      const voucher = await Voucher.findOneAndUpdate({ _id: id }, { name });
+      req.flash("alertMessage", "Berhasil mengubah kategori");
+      req.flash("alertStatus", "success");
+
+      res.redirect("/voucher");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/voucher");
+    }
+  },
 };
