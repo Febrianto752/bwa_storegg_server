@@ -183,4 +183,24 @@ module.exports = {
       res.redirect("/voucher");
     }
   },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const voucher = await Voucher.findOneAndDelete({ _id: id });
+
+      let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnail}`;
+
+      if (fs.existsSync(currentImage)) {
+        fs.unlinkSync(currentImage);
+      }
+
+      req.flash("alertMessage", "Berhasil menghapus voucher");
+      req.flash("alertStatus", "success");
+      res.redirect("/voucher");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/voucher");
+    }
+  },
 };
