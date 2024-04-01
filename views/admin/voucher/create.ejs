@@ -83,11 +83,11 @@
                           <label>Nominal</label>
                           <select
                             required
-                            class="select2"
                             multiple="multiple"
                             data-placeholder="Select a State"
                             style="width: 100%"
                             name="nominals"
+                            id="nominals"
                           >
                             <% nominals.forEach((nominal, index)=> { %>
                             <option value="<%= nominal._id %>">
@@ -144,7 +144,9 @@
   </section>
   <!-- /.content -->
 </div>
-
+<script>
+  new MultiSelectTag("nominals"); // id
+</script>
 <%- include("./../../partials/footer") %> <%- include("./../../partials/js") %>
 
 <script>
