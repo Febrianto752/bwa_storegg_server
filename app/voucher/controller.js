@@ -107,13 +107,76 @@ module.exports = {
   actionEdit: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name } = req.body;
+      const { name, category, nominals } = req.body;
 
-      const voucher = await Voucher.findOneAndUpdate({ _id: id }, { name });
-      req.flash("alertMessage", "Berhasil mengubah kategori");
-      req.flash("alertStatus", "success");
+      if (req.file) {
+        let tmp_path = req.file.path;
+        let originalExt =
+          req.file.originalname.split(".")[
+            req.file.originalname.split(".").length - 1
+          ];
+        let filename = req.file.filename + "." + originalExt;
+        console.log("filename : ");
+        console.log(filename); // entah kenapa namanya menjadi random
+        let target_path = path.resolve(
+          config.rootPath,
+          `public/uploads/${filename}`
+        );
 
-      res.redirect("/voucher");
+        const src = fs.createReadStream(tmp_path);
+        const dest = fs.createWriteStream(target_path);
+
+        src.pipe(dest);
+
+        src.on("end", async () => {
+          try {
+            const voucher = await Voucher.findOne({ _id: id });
+
+            let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnail}`;
+
+            if (fs.existsSync(currentImage)) {
+              fs.unlinkSync(currentImage);
+            }
+
+            await Voucher.findOneAndUpdate(
+              {
+                _id: id,
+              },
+              {
+                name,
+                category,
+                nominals,
+                thumbnail: filename,
+              }
+            );
+
+            req.flash("alertMessage", "Berhasil mengubah voucher");
+            req.flash("alertStatus", "success");
+
+            res.redirect("/voucher");
+          } catch (error) {
+            req.flash("alertMessage", `${error.message}`);
+            req.flash("alertStatus", "danger");
+            res.redirect("/voucher");
+          }
+        });
+      } else {
+        await Voucher.findOneAndUpdate(
+          {
+            _id: id,
+          },
+          {
+            name,
+            category,
+            nominals,
+          }
+        );
+
+        req.flash("alertMessage", "Berhasil mengubah voucher");
+        req.flash("alertStatus", "success");
+
+        res.redirect("/voucher");
+      }
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

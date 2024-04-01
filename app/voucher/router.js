@@ -1,5 +1,11 @@
 const express = require("express");
-const { index, viewCreate, actionCreate, viewEdit } = require("./controller");
+const {
+  index,
+  viewCreate,
+  actionCreate,
+  viewEdit,
+  actionEdit,
+} = require("./controller");
 const router = express.Router();
 const multer = require("multer");
 const os = require("os");
@@ -12,5 +18,10 @@ router.post(
   actionCreate
 );
 router.get("/edit/:id", viewEdit);
+router.put(
+  "/edit/:id",
+  multer({ dest: os.tmpdir() }).single("image"),
+  actionEdit
+);
 
 module.exports = router;
