@@ -1,0 +1,46 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama Pemilik</th>
+      <th>Nama Bank</th>
+      <th>No. Rekening</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for( let index = 0; index < banks.length; index++ ) { %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= banks[index].owner %></td>
+      <td><%= banks[index].bankName %></td>
+      <td><%= banks[index].noRekening %></td>
+      <td>
+        <a href="/bank/edit/<%= banks[index]._id %>" class="btn btn-warning">
+          <i class="fas fa-pencil-alt"></i>
+          Ubah</a
+        >
+        <form
+          action="/bank/delete/<%= banks[index]._id %>?_method=DELETE"
+          class="d-inline-block"
+          method="post"
+        >
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash"></i>
+            Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>No.</th>
+      <th>Nama Pemilik</th>
+      <th>Nama Bank</th>
+      <th>No. Rekening</th>
+      <th>Aksi</th>
+    </tr>
+  </tfoot>
+</table>
