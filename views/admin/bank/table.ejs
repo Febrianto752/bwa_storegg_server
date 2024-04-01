@@ -16,7 +16,10 @@
       <td><%= banks[index].bankName %></td>
       <td><%= banks[index].noRekening %></td>
       <td>
-        <a href="/bank/edit/<%= banks[index]._id %>" class="btn btn-warning">
+        <a
+          href="/bank/edit/<%= banks[index]._id %>"
+          class="btn btn-warning btn-sm"
+        >
           <i class="fas fa-pencil-alt"></i>
           Ubah</a
         >
@@ -25,7 +28,7 @@
           class="d-inline-block"
           method="post"
         >
-          <button type="submit" class="btn btn-danger">
+          <button type="submit" class="btn btn-danger btn-sm">
             <i class="fas fa-trash"></i>
             Hapus
           </button>
