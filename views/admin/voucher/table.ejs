@@ -39,8 +39,12 @@
         <% } %>
       </td>
       <td>
-        <form action="" style="display: inline-block">
-          <button class="btn btn-primary btn-sm mb-2">
+        <form
+          action="/voucher/status/<%= vouchers[index]._id %>?_method=PUT"
+          style="display: inline-block"
+          method="post"
+        >
+          <button type="submit" class="btn btn-primary btn-sm mb-2">
             <i class="fas fa-folder"></i>
             <% if (vouchers[index].status === 'Y') { %> Matikan <% }else{ %>
             Hidupkan <% } %>
