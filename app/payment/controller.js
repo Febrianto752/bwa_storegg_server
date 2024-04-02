@@ -44,4 +44,36 @@ module.exports = {
       res.redirect("/payment");
     }
   },
+  viewEdit: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const payment = await Payment.findOne({ _id: id });
+      const banks = await Bank.find();
+
+      res.render("admin/payment/edit", { payment, banks });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+    }
+  },
+  actionEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { type, banks } = req.body;
+
+      const payment = await Payment.findOneAndUpdate(
+        { _id: id },
+        { type, banks }
+      );
+      req.flash("alertMessage", "Berhasil mengubah payment");
+      req.flash("alertStatus", "success");
+
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+    }
+  },
 };
