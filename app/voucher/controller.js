@@ -16,7 +16,12 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
-      return res.render("admin/voucher/view_voucher", { vouchers, alert });
+      return res.render("admin/voucher/view_voucher", {
+        vouchers,
+        alert,
+        username: req.session.user.name,
+        title: "voucher list",
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -26,7 +31,12 @@ module.exports = {
   viewCreate: async (req, res) => {
     const categories = await Category.find();
     const nominals = await Nominal.find();
-    return res.render("admin/voucher/create", { categories, nominals });
+    return res.render("admin/voucher/create", {
+      categories,
+      nominals,
+      username: req.session.user.name,
+      title: "tambah voucher",
+    });
   },
   actionCreate: async (req, res) => {
     try {
@@ -97,7 +107,13 @@ module.exports = {
       const categories = await Category.find();
       const nominals = await Nominal.find();
 
-      res.render("admin/voucher/edit", { voucher, categories, nominals });
+      res.render("admin/voucher/edit", {
+        voucher,
+        categories,
+        nominals,
+        username: req.session.user.name,
+        title: "ubah jenis pembayaran",
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

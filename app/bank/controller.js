@@ -6,8 +6,16 @@ module.exports = {
       const banks = await Bank.find();
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
+
       const alert = { message: alertMessage, status: alertStatus };
-      return res.render("admin/bank/view_bank", { banks, alert });
+
+      const username = req.session.user.name;
+      return res.render("admin/bank/view_bank", {
+        banks,
+        alert,
+        username,
+        title: "bank list",
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -38,8 +46,8 @@ module.exports = {
     const { id } = req.params;
     try {
       const bank = await Bank.findOne({ _id: id });
-
-      res.render("admin/bank/edit", { bank });
+      const username = req.session.user.name;
+      res.render("admin/bank/edit", { bank, username, title: "edit bank" });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

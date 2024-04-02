@@ -8,7 +8,7 @@ module.exports = {
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
       if (req.session.user === null || req.session.user === undefined) {
-        return res.render("admin/user/view_signin", { alert });
+        return res.render("admin/user/view_signin", { alert, title: "signin" });
       } else {
         res.redirect("/dashboard");
       }

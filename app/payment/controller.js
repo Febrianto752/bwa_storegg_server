@@ -9,7 +9,13 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
-      return res.render("admin/payment/view_payment", { payments, alert });
+
+      return res.render("admin/payment/view_payment", {
+        payments,
+        alert,
+        username: req.session.user.name,
+        title: "jenis pembayaran",
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -20,7 +26,11 @@ module.exports = {
     try {
       const banks = await Bank.find();
 
-      return res.render("admin/payment/create", { banks });
+      return res.render("admin/payment/create", {
+        banks,
+        username: req.session.user.name,
+        title: "buat jenis pembayaran",
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -50,7 +60,12 @@ module.exports = {
       const payment = await Payment.findOne({ _id: id });
       const banks = await Bank.find();
 
-      res.render("admin/payment/edit", { payment, banks });
+      res.render("admin/payment/edit", {
+        payment,
+        banks,
+        username: req.session.user.name,
+        title: "ubah jenis pembayaran",
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
