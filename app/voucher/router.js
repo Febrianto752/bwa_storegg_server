@@ -11,7 +11,9 @@ const {
 const router = express.Router();
 const multer = require("multer");
 const os = require("os");
+const { isLoginAdmin } = require("../middlewares/auth");
 
+router.use(isLoginAdmin);
 router.get("/", index);
 router.get("/create", viewCreate);
 router.post(
