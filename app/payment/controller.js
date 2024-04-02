@@ -76,4 +76,17 @@ module.exports = {
       res.redirect("/payment");
     }
   },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const payment = await Payment.findOneAndDelete({ _id: id });
+      req.flash("alertMessage", "Berhasil menghapus jenis pembayaran");
+      req.flash("alertStatus", "success");
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+    }
+  },
 };
