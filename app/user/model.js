@@ -9,6 +9,8 @@ const userSchema = mongoose.Schema(
     name: {
       type: String,
       require: [true, "nama harus diisi"],
+      maxLength: [225, "panjang nama harus diantara 3 sampai 255 karaketer"],
+      minLength: [3, "panjang nama harus diantara 3 sampai 255 karaketer"],
     },
     password: {
       type: String,
