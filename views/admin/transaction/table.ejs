@@ -1,0 +1,92 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama game</th>
+      <th>Item</th>
+      <th>Total harga</th>
+      <th>Status</th>
+      <th>Nama player</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for( let index = 0; index < transactions.length; index++ ) { %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td>
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <img
+              width="48px"
+              height="48px"
+              src="/uploads/<%= transactions[index].historyVoucherTopup.thumbnail %>"
+              alt="thumbnail"
+            />
+          </li>
+        </ul>
+        <%= transactions[index]?.historyVoucherTopup?.gameName %>
+        <br />
+        <%= transactions[index]?.historyVoucherTopup?.category %>
+      </td>
+      <td>
+        <%= transactions[index]?.historyVoucherTopup?.coinQuantity %> <%=
+        transactions[index]?.historyVoucherTopup?.coinName %>
+      </td>
+      <td><%= transactions[index].value %> IDR</td>
+
+      <td>
+        <% if(transactions[index].status==='pending' ) { %>
+        <span class="badge badge-warning">
+          <%= transactions[index].status %>
+        </span>
+        <% } else if(transactions[index].status==='success' ) { %>
+        <span class="badge badge-success">
+          <%= transactions[index].status %>
+        </span>
+        <% } else { %>
+        <span class="badge badge-danger">
+          <%= transactions[index].status %>
+        </span>
+        <%} %>
+      </td>
+
+      <td><%= transactions[index]?.player?.name ?? '-' %></td>
+
+      <td>
+        <form
+          style="display: inline-block"
+          action="/transaction/status/<%= transactions[index]._id %>?status=failed&_method=PUT"
+          method="POST"
+        >
+          <button class="btn btn-danger btn-sm" type="submit">
+            <i class="fas fa-times-circle"></i>
+            Tolak
+          </button>
+        </form>
+        <form
+          style="display: inline-block"
+          action="/transaction/status/<%= transactions[index]._id %>?status=success&_method=PUT"
+          method="POST"
+        >
+          <button class="btn btn-info btn-sm" type="submit">
+            <i class="fas fa-check"></i>
+            Terima
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>No.</th>
+      <th>Nama game</th>
+      <th>Item</th>
+      <th>Total harga</th>
+      <th>Status</th>
+      <th>Nama player</th>
+      <th>Aksi</th>
+    </tr>
+  </tfoot>
+</table>
