@@ -2,7 +2,7 @@ const Transaction = require("./model");
 module.exports = {
   index: async (req, res) => {
     try {
-      const transactions = await Transaction.find();
+      const transactions = await Transaction.find().populate("player");
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
