@@ -63,7 +63,7 @@ playerSchema.path("email").validate(
       throw err;
     }
   },
-  (attr) => `${attr.value} sudah terdaftar`
+  (attr) => `email ${attr.value} sudah terdaftar`
 );
 
 playerSchema.pre("save", function (next) {

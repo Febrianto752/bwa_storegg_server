@@ -6,6 +6,7 @@ var logger = require("morgan");
 var methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
+// const bodyParser = require("body-parser");
 
 var categoryRouter = require("./app/category/router");
 var dashboardRouter = require("./app/dashboard/router");
@@ -15,7 +16,9 @@ var bankRouter = require("./app/bank/router");
 var paymentRouter = require("./app/payment/router");
 var userRouter = require("./app/user/router");
 var transactionRouter = require("./app/transaction/router");
+
 var playerRouter = require("./app/player/router");
+var authRouter = require("./app/auth/router");
 
 var app = express();
 
@@ -43,6 +46,8 @@ app.use(
   "/adminlte",
   express.static(path.join(__dirname, "/node_modules/admin-lte/"))
 );
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", userRouter);
 app.use("/dashboard", dashboardRouter);
@@ -57,6 +62,7 @@ app.use("/transaction", transactionRouter);
 const APIURL = "/api/v1";
 
 app.use(`${APIURL}/players`, playerRouter);
+app.use(`${APIURL}/auth`, authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
