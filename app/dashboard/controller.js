@@ -12,7 +12,7 @@ module.exports = {
       const category = await Category.countDocuments();
       res.render("admin/dashboard/view_dashboard", {
         username: req.session.user.name,
-        title: "Halaman Dashboard",
+        title: "Dashboard",
         count: {
           transaction,
           player,

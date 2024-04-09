@@ -14,7 +14,7 @@ module.exports = {
         payments,
         alert,
         username: req.session.user.name,
-        title: "jenis pembayaran",
+        title: "payment list",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -29,7 +29,7 @@ module.exports = {
       return res.render("admin/payment/create", {
         banks,
         username: req.session.user.name,
-        title: "buat jenis pembayaran",
+        title: "payment list",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -64,7 +64,7 @@ module.exports = {
         payment,
         banks,
         username: req.session.user.name,
-        title: "ubah jenis pembayaran",
+        title: "payment list",
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
