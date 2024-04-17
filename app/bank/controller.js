@@ -23,7 +23,10 @@ module.exports = {
     }
   },
   viewCreate: async (req, res) => {
-    return res.render("admin/bank/create");
+    return res.render("admin/bank/create", {
+      title: "Tambah Bank",
+      username: req.session.user.name,
+    });
   },
   actionCreate: async (req, res) => {
     try {
