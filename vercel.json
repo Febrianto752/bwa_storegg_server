@@ -2,9 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "bin/www.js",
-      "use": "@vercel/node"
+      "src": "bin/www",
+      "use": "@now/node"
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "bin/www.js" }]
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "bin/www"
+    }
+  ]
 }
