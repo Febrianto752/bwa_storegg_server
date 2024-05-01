@@ -1,9 +1,15 @@
 {
   "version": 2,
+  "env": {
+    "MODE": "dev",
+    "SERVICE_NAME": "bwa-storegg",
+    "MONGO_URL": "mongodb://bwa_storegg:VmDVGpLvFGi3th0A@cluster0-shard-00-00.k2jeq.mongodb.net:27017,cluster0-shard-00-01.k2jeq.mongodb.net:27017,cluster0-shard-00-02.k2jeq.mongodb.net:27017/db_bwa_store_gg?ssl=true&replicaSet=atlas-iga962-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0",
+    "SECRET": "rahasia123"
+  },
   "builds": [
     {
       "src": "bin/www.js",
-      "use": "@now/node"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
