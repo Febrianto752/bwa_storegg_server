@@ -6,7 +6,8 @@ var logger = require("morgan");
 var methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
-const cors = require("cors")
+const cors = require("cors");
+const MongoStore = require("connect-mongo");
 // const bodyParser = require("body-parser");
 
 var categoryRouter = require("./app/category/router");
@@ -22,7 +23,7 @@ var playerRouter = require("./app/player/router");
 var authRouter = require("./app/auth/router");
 
 var app = express();
-app.use(cors())
+app.use(cors());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -33,7 +34,11 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false },
+    cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 },
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URL,
+      collectionName: "sessions",
+    }),
   })
 );
 
